@@ -1,26 +1,37 @@
-# CakePHP Application Skeleton
 
-[![Build Status](https://api.travis-ci.org/cakephp/app.png)](https://travis-ci.org/cakephp/app)
-[![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
 
-A skeleton for creating applications with [CakePHP](http://cakephp.org) 3.0.
 
-This is an unstable repository and should be treated as an alpha.
+Install: 
 
-## Installation
+0. create mysql database
 
-1. Download [Composer](http://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+1. create mysql table
 
-If Composer is installed globally, run
-```bash
-composer create-project --prefer-dist cakephp/app [app_name]
-```
+CREATE TABLE IF NOT EXISTS `short_urls` (
+`serial` int(11) NOT NULL,
+  `shortUrl` varchar(20) NOT NULL,
+  `longUrl` varchar(2000) NOT NULL,
+  `timeStamp` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `shortUrls`
+ ADD PRIMARY KEY (`serial`), ADD KEY `serial` (`serial`);
+ALTER TABLE `shortUrls`
+MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT;
 
-You should now be able to visit the path to where you installed the app and see
-the setup traffic lights.
+2. Setup apache : The url redirect service. That so simple! The second best way a simple apache config
+ mod_dbd + mod_rewrite.
+  </VirtualHost>
+     ServerName shorturl.com
+     ServerAlias  shorturl.com
+     RewriteEngine on
+     RewriteLogLevel 9  
+     RewriteMap myquery "fastdbd:SELECT redirect FROM ?database?.url_shorter WHERE urlId = %{([A-Za-z0-9]+)}s"
+     CustomLog /var/log/apache/shorturl-acces.log combined
+     ErrorLog /var/log/apache/shorturl-error.log
+  </VirtualHost>
 
-## Configuration
 
-Read and edit `config/app.php` and setup the 'Datasources' and any other
-configuration relevant for your application.
+3. Create mysql user and set up cake.
+
+
+
