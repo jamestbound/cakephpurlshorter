@@ -21,7 +21,7 @@ function urlSubmit() {
     } else {
         var xh = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xh.open("POST", "", true);
+    xh.open("POST", "/short_urls/jsonadd", true);
 //        xh.setRequestHeader("Content-length", parseInt(JSON.stringify(postv).length));
     xh.overrideMimeType('application/json');
     xh.timeout = 50000;
