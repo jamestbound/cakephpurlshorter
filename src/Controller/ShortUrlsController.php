@@ -45,17 +45,25 @@ class ShortUrlsController extends AppController
      */
     public function add()
     {
+//        this->ShortUrls->("SELECT LAST_INSERT_SERIAL();");
         $shortUrl = $this->ShortUrls->newEntity();
         if ($this->request->is('post')) {
             $shortUrl = $this->ShortUrls->patchEntity($shortUrl, $this->request->data);
+            $arayka = $this->ShortUrls->find('all');
+//           $datexd = new DateTime();
+            $date = date_create();
+            $shortUrl['timeStamp'] = date_timestamp_get($date);
+           $shortUrl['shortUrl'] = base_convert(count($arayka->all()), 10, 36);;
             if ($this->ShortUrls->save($shortUrl)) {
-                $this->Flash->success('The short url has been saved.');
+                $this->Flash->success( 'The short url has been saved.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The short url could not be saved. Please, try again.');
+                $this->Flash->error($shortUrl. 'The short url could not be saved. Please, try again.');
             }
+
+
         }
-        $this->set(compact('shortUrl'));
+        $this->set(compact('shortUrl')); 
         $this->set('_serialize', ['shortUrl']);
     }
 
@@ -102,4 +110,7 @@ class ShortUrlsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+
+    
 }
