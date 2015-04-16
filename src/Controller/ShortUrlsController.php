@@ -45,12 +45,10 @@ class ShortUrlsController extends AppController
      */
     public function add()
     {
-//        this->ShortUrls->("SELECT LAST_INSERT_SERIAL();");
         $shortUrl = $this->ShortUrls->newEntity();
         if ($this->request->is('post')) {
             $shortUrl = $this->ShortUrls->patchEntity($shortUrl, $this->request->data);
             $arayka = $this->ShortUrls->find('all');
-//           $datexd = new DateTime();
             $date = date_create();
             $shortUrl['timeStamp'] = date_timestamp_get($date);
            $shortUrl['shortUrl'] = base_convert(count($arayka->all()), 10, 36);;
@@ -114,12 +112,11 @@ class ShortUrlsController extends AppController
     public function jsonadd()
     {
         $this->loadComponent('RequestHandler');
-//        this->ShortUrls->("SELECT LAST_INSERT_SERIAL();");
+
         $shortUrl = $this->ShortUrls->newEntity();
         if ($this->request->is('post')) {
             $shortUrl = $this->ShortUrls->patchEntity($shortUrl, $this->request->data);
             $arayka = $this->ShortUrls->find('all');
-//           $datexd = new DateTime();
             $date = date_create();
             $shortUrl['timeStamp'] = date_timestamp_get($date);
            $shortUrl['shortUrl'] = base_convert(count($arayka->all()), 10, 36);;
